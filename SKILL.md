@@ -1,6 +1,6 @@
 ---
 name: baby-steps-report
-description: 撰写"宝宝都能读"的 step-by-step 科学推导报告：self-contained、无跳步（no handwaving）、以问题链组织、中英双语 LaTeX 编译为 PDF、附落盘验证脚本。当用户要求写推导报告、推导笔记、总结/讨论报告，要求补全推导、讲解一份推导、审计 notes 并成文，或提到 "step by step"、"不要跳步"、"self-contained"、"宝宝都能读" 时使用。
+description: 撰写"宝宝都能读"的 step-by-step 科学推导报告（notes/讲解体）：self-contained、无跳步（no handwaving）、以问题链组织、中英双语 LaTeX 编译为 PDF、附落盘验证脚本。当用户要求写推导报告、推导笔记、总结/讨论报告，要求补全推导、讲解一份推导、审计 notes 并成文，或提到 "step by step"、"不要跳步"、"self-contained"、"宝宝都能读" 时使用。仅适用于 notes 形式的讲解报告；用户要写论文（paper / manuscript / 正式投稿文章）时不要使用本 skill——论文不写成这种风格。
 argument-hint: <推导主题或任务说明；附上 notes 路径>
 allowed-tools:
   - Read
@@ -23,6 +23,14 @@ allowed-tools:
 目标读者设定为**一个不了解当前 framework 的新人**：所有 convention、notation、专有名词在首次出现处交代清楚；用户未声明"我已知道"的内容——包括教科书内容——一律现场推导。
 
 **动笔写正文之前，必须先读 [references/style-guide.md](references/style-guide.md)**（风格细则与对照实例）。排版模板见 [references/latex-template.md](references/latex-template.md)，交付前自审用 [references/checklist.md](references/checklist.md)。
+
+## 适用范围（先判断再动笔）
+
+本 skill 只用于 **notes 形式的报告**：推导笔记、讲解报告、审计或补全一份推导、总结讨论——读者是"想彻底搞懂的人"，篇幅不设限，展开越细越好。
+
+**论文不适用。** 用户要写论文（paper、manuscript、正式投稿文章、PRL/PRB 草稿等）时，不要使用本 skill，也不要把论文写成这种风格：论文面向同行专家，受篇幅与期刊文体约束，要求压缩与精炼，"step by step 展开一切"在论文里是缺点而不是优点。（论文的语言润色另有 hardworking-paper-writer skill。）
+
+拿不准用户要的是 notes 还是论文时，先问清楚再动笔。
 
 ## 工作流程（六个阶段）
 
