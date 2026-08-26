@@ -32,7 +32,7 @@ allowed-tools:
 
 拿不准用户要的是 notes 还是论文时，先问清楚再动笔。
 
-## 工作流程（六个阶段）
+## 工作流程（七个阶段）
 
 ### 阶段 1：输入确认
 
@@ -57,7 +57,22 @@ allowed-tools:
 - 每节标注推导对应用户 notes 的哪一节/哪个公式号。**用内容和公式号锚定，绝不用 LaTeX 行号**（用户看的是 PDF，不是源码）。
 - 每节标注结束时的状态：已证明什么、用了什么假设、尚未证明什么。
 
-### 阶段 4：写作
+### 阶段 4：Gap 检查与提问（动笔推导前的强制关卡）
+
+规划完成后、正式开始公式推导之前，必须先停下来做一次三方对照：**用户的 idea（任务描述）↔ 用户的 notes ↔ 你规划的推导**。逐类排查：
+
+1. **相互违背**：三者之间有没有矛盾——近似及其可控范围（notes 里用的近似在 idea 关心的参数区间内还成立吗？）、convention 或定义冲突、notes 的中间结论与 idea 的预期不符、你规划的路线与 notes 已有的推导路线不一致，等等。
+2. **疑似另有所指**：idea 里哪句话有两种读法？notes 里哪个公式、哪一步你没有十足把握理解对了？你是否在暗自替用户做 idea 里没写明的决定（选了某个极限、丢了某一项、默认了某个序参量）？
+
+把找到的每一处 gap 整理成问题，用 AskUserQuestion 问用户（一次最多 4 个问题，多了分批问）。每个问题必须：
+
+- **带具体证据**：指明分歧由 idea 里哪句话、notes 里哪个公式（节号/式号）引起，把关键原文引出来；
+- **带可选项**：给 A/B/C 等具体选项，每个选项写清"选它意味着接下来怎么推"；用户总可以在 Other 里说别的想法；
+- **一次只问一件事**。
+
+**等用户答完再动笔。** 用户可能从选项里选，也可能提出别的想法；根据回答更新推导规划（必要时回到阶段 3 修订问题链），并把裁决写进报告相应位置（"你确认了……，因此下面采用……"）。如果排查后确实没有发现任何 gap，向用户明说检查过哪些类别、没有发现分歧，然后再开始推导——不允许跳过这一阶段直接开写。
+
+### 阶段 5：写作
 
 完整细则与对照实例在 [references/style-guide.md](references/style-guide.md)，写之前必读。十条核心规则：
 
@@ -72,13 +87,16 @@ allowed-tools:
 9. **假设记账在现场**：固定句式"到这里严格得到的是 X；若要进一步声称 Y，还必须加入假设 A；因此 X 本身不能推出 Y"，写在相关公式旁边。
 10. **不自造代号**：不发明 [C1]、dPDW 这类需要读者记忆的缩写标签；证据标签（脚本验证、数值确认）放脚注或附录对照表，不进正文叙事主线。
 
-### 阶段 5：辅助验证
+### 阶段 6：辅助验证
 
 - 关键代数用 Python（sympy/numpy）或 Mathematica（wolframscript）复核。
+- **工具查找顺序**：
+  - Mathematica：先试 PATH 里的 `wolframscript`；没有就找 macOS 默认安装 `/Applications/Mathematica.app/Contents/MacOS/wolframscript`。确实找不到就只用 Python，不算失败。
+  - Python：优先 conda 的 python，且**直接用绝对路径调用**（`conda activate`/`conda run` 依赖 shell 初始化，在沙盒里常失败）。常见位置：`~/opt/anaconda3/bin/python`、`~/miniconda3/bin/python`、`~/anaconda3/bin/python`；找不到就从 shell 配置里 `grep conda` 定位安装根。缺 sympy/numpy 就装进该 env；连 conda 都没有时自己配环境（`python3 -m venv` + `pip install sympy numpy`）。环境问题不构成放弃脚本验证的理由。
 - **所有脚本落盘**到报告目录 `scripts/` 下，文件头注释写明验证报告中的哪些公式（式号）。
 - 正文推导必须独立成立；脚本只是确认。验证结果以脚注形式出现（例如 `\footnote{式 (3.2) 已由 scripts/check_bogoliubov.py 数值验证至 $10^{-12}$。}`），或在附录给一张"式号 ↔ 脚本"对照表。
 
-### 阶段 6：交付与自审
+### 阶段 7：交付与自审
 
 1. 产出 `report_CN.tex` 与 `report_EN.tex`：中文先写，英文按内容严格对应重写（不是逐字机翻；术语用领域标准英文；两份公式编号一一对应）。模板与编译命令见 [references/latex-template.md](references/latex-template.md)。
 2. `xelatex` 各编译两遍，确认无 undefined references；有图放 `figs/`。

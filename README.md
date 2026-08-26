@@ -40,7 +40,7 @@ baby-steps-report/
 │   ├── style-guide.md           # 风格细则：骨架、节奏、禁语清单与拆解配方、
 │   │                            #   意义句措辞库、四组旧写法→新写法对照实例
 │   ├── latex-template.md        # 中英文 XeLaTeX 模板、编译与清理流程
-│   └── checklist.md             # 交付前 25 项定性自审清单
+│   └── checklist.md             # 交付前 26 项定性自审清单
 └── README.md
 ```
 
@@ -79,6 +79,8 @@ ln -s ~/Documents/AI/baby-steps-report ~/.claude/skills/baby-steps-report
 2. **知识边界**——明确说"我知道 X"（例如"我知道 sine-Gordon RG"），X 的标准结论就可以直接引用，其余一律现场推导；
 3. **问题清单**——你想让报告回答的具体问题，每个问题都会得到直接的、显著标出的回答。
 
+正式推导开始前有一道强制关卡：skill 会把你的 idea、你的 notes、它规划的推导三方对照，把发现的矛盾（近似的可控范围、convention 冲突、路线分歧……）和它疑似没理解对的地方，整理成**带证据（idea 哪句话、notes 哪个公式）、带 A/B/C 选项**的问题问你；你选完（或者提出别的想法）之后它才动笔。
+
 产出目录：
 
 ```
@@ -96,11 +98,12 @@ ln -s ~/Documents/AI/baby-steps-report ~/.claude/skills/baby-steps-report
 | 1 输入确认 | 确认 notes、知识边界、问题清单；缺了就问 |
 | 2 notation 提取 | 通读 notes 建符号词典；冲突处明确指出并给修改建议 |
 | 3 推导规划 | 列问题链（每节一个问题）；列易混淆概念簇；标注对应 notes 的节/公式号 |
-| 4 写作 | 按 style-guide 十条核心规则写正文 |
-| 5 辅助验证 | Python/Mathematica 复核关键代数，脚本落盘，结果进脚注/附录 |
-| 6 交付与自审 | 双语编译出 PDF；过 25 项 checklist；清理中间文件 |
+| 4 Gap 检查与提问 | 三方对照 idea / notes / 推导规划，找矛盾（近似与可控范围、convention……）与歧义；带证据、带 A/B/C 选项向用户提问，等用户裁决后才动笔 |
+| 5 写作 | 按 style-guide 十条核心规则写正文 |
+| 6 辅助验证 | Python/Mathematica 复核关键代数，脚本落盘，结果进脚注/附录 |
+| 7 交付与自审 | 双语编译出 PDF；过 26 项 checklist；清理中间文件 |
 
 ## 依赖
 
 - **XeLaTeX**（TeX Live / MacTeX）；中文版用 xeCJK + macOS 系统字体（Songti SC 等），其他系统按 `references/latex-template.md` 的说明替换字体。
-- 验证脚本（可选）：Python 3（sympy / numpy）或 Mathematica（wolframscript）。
+- 验证脚本（可选）：Python 3（sympy / numpy，优先 conda 版本、按绝对路径调用）或 Mathematica（wolframscript）。两者都找不到时 skill 会自行配置 Python 环境。
